@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 public class EndpointHitDto {
-    @NotNull
+    @NotNull(message = "'app' can not be null")
     private String app;
-    @NotNull
+    @NotNull(message = "'uri' can not be null")
     private String uri;
-    @NotNull
+    @NotNull(message = "'ip' can not be null")
     private String ip;
-    @NotNull
+    @NotNull(message = "'timestamp' can not be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 }

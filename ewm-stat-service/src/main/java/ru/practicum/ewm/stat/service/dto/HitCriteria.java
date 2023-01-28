@@ -14,10 +14,10 @@ import java.util.Collection;
 public class HitCriteria {
     @Nullable
     private Collection<String> uris;
-    @NotNull
+    @NotNull(message = "'start' can not be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime start;
-    @NotNull
+    @NotNull(message = "'end' can not be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime end;
     private boolean isUnique;
