@@ -1,0 +1,1 @@
+FROM bellsoft/liberica-openjdk-alpine-musl:11
