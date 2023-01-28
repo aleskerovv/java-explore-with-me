@@ -2,7 +2,6 @@ package ru.practicum.ewm.stat.service.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.stat.service.dto.EndpointHitDto;
 import ru.practicum.ewm.stat.service.dto.EndpointHitResponseDto;
@@ -13,8 +12,8 @@ import ru.practicum.ewm.stat.service.repository.StatsRepository;
 import ru.practicum.ewm.stat.service.utils.EndpointHitMapper;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
