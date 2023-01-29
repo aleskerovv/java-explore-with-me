@@ -27,9 +27,11 @@ services:
       - /var/lib/postgresql/data/
       - ./ewm-stat-service/stats-server/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/init.sql
 
-
+#
 #TODO: will be created in part2
   ewm-service:
+    container_name: ewm-server
+    build: ewm-service
     ports:
       - "8080:8080"
 
