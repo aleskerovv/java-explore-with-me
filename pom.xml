@@ -12,9 +12,11 @@
 
 	<name>Explore With Me</name>
 	<modules>
-		<module>ewm-gateway</module>
 		<module>ewm-service</module>
 		<module>ewm-stat-service</module>
+        <module>ewm-stat-service/stats-server</module>
+		<module>ewm-stat-service/stats-client</module>
+		<module>ewm-stat-service/common-dto-storage</module>
 	</modules>
 
 	<groupId>ru.practicum</groupId>

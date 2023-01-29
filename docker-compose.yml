@@ -25,7 +25,7 @@ services:
       - POSTGRES_PASSWORD=admin
     volumes:
       - /var/lib/postgresql/data/
-      - ./ewm-stat-service/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./ewm-stat-service/stats-server/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/init.sql
 
 
 #TODO: will be created in part2
