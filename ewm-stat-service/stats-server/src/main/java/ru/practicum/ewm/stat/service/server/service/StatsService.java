@@ -5,12 +5,12 @@ import ru.practicum.ewm.dto.EndpointHitResponseDto;
 import ru.practicum.ewm.dto.StatResponse;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 
 public interface StatsService {
 
     EndpointHitResponseDto saveStatistics(EndpointHitDto dto);
 
     StatResponse getStatistics(LocalDateTime startDate, LocalDateTime endDate,
-                               Collection<String> uris, boolean isUnique);
+                               List<String> uris, boolean isUnique);
 }
