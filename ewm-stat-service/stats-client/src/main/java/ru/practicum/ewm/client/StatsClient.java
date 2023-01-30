@@ -1,35 +1,33 @@
-package ru.practicum.ewm.service.client;
+package ru.practicum.ewm.client;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.DefaultUriBuilderFactory;
-import ru.practicum.ewm.stat.service.dto.EndpointHitDto;
-import ru.practicum.ewm.stat.service.dto.HitCriteria;
+import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.HitCriteria;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class StatsClient {
+    private static final String URL = "http://localhost:9090";
     protected final RestTemplate rest;
 
-    public StatsClient(@Value("${server.url}") String serverUrl, RestTemplateBuilder builder) {
-        this.rest = builder
-                .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
-                .requestFactory(HttpComponentsClientHttpRequestFactory::new)
-                .build();
+    public StatsClient(RestTemplateBuilder builder) {
+        this.rest = builder.build();
     }
 
-    public ResponseEntity<Object> post(EndpointHitDto endpointHitDto) {
-        return makeAndSendRequest(HttpMethod.POST, "/hit", null, endpointHitDto);
+
+    public ResponseEntity<Object> post (EndpointHitDto endpointHitDto) {
+        return makeAndSendRequest(HttpMethod.POST, URL + "/hit", null, endpointHitDto);
     }
 
     public ResponseEntity<Object> get(HitCriteria hitCriteria) {
-        return makeAndSendRequest(HttpMethod.GET, "/stats", null, hitCriteria);
+        return makeAndSendRequest(HttpMethod.GET, URL + "/stats", null, hitCriteria);
     }
 
     private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path,

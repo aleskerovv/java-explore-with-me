@@ -1,4 +1,4 @@
-package ru.practicum.ewm.stat.service.dto;
+package ru.practicum.ewm.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

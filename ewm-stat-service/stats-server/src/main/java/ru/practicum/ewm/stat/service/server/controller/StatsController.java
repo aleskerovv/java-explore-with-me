@@ -1,9 +1,9 @@
 package ru.practicum.ewm.stat.service.server.controller;
 
-import ru.practicum.ewm.stat.service.dto.EndpointHitDto;
-import ru.practicum.ewm.stat.service.dto.EndpointHitResponseDto;
-import ru.practicum.ewm.stat.service.dto.HitCriteria;
-import ru.practicum.ewm.stat.service.dto.StatResponse;
+import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitResponseDto;
+import ru.practicum.ewm.dto.HitCriteria;
+import ru.practicum.ewm.dto.StatResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
