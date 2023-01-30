@@ -22,7 +22,7 @@ public class StatsClient {
     }
 
 
-    public ResponseEntity<Object> post (EndpointHitDto endpointHitDto) {
+    public ResponseEntity<Object> post(EndpointHitDto endpointHitDto) {
         return makeAndSendRequest(HttpMethod.POST, URL + "/hit", null, endpointHitDto);
     }
 
