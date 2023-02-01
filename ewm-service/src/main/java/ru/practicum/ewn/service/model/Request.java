@@ -1,6 +1,7 @@
 package ru.practicum.ewn.service.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.practicum.ewn.service.enums.RequestStatus;
 
 import javax.persistence.*;
@@ -10,8 +11,9 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Builder
+@Accessors(chain = true)
 @Entity
+@Table(name = "requests")
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,18 +1,17 @@
 package ru.practicum.ewn.service.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Builder
+@Accessors(chain = true)
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

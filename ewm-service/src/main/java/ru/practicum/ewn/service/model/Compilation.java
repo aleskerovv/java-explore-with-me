@@ -1,6 +1,7 @@
 package ru.practicum.ewn.service.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,14 +10,13 @@ import java.util.List;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Builder
+@Accessors(chain = true)
 @Entity
+@Table(name = "compilations")
 public class Compilation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "event_id", referencedColumnName = "id")
     @ToString.Exclude
     private List<Event> events;
     private Boolean pinned;

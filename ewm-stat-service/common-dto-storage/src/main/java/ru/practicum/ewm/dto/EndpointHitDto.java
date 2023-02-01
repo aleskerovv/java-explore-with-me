@@ -1,22 +1,26 @@
 package ru.practicum.ewm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 import lombok.experimental.Accessors;
+import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Data
-@Accessors(chain = true)
+@Value
+@Builder
+@Jacksonized
 public class EndpointHitDto {
     @NotNull(message = "'app' can not be null")
-    private String app;
+    String app;
     @NotNull(message = "'uri' can not be null")
-    private String uri;
+    String uri;
     @NotNull(message = "'ip' can not be null")
-    private String ip;
+    String ip;
     @NotNull(message = "'timestamp' can not be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime timestamp;
+    LocalDateTime timestamp;
 }

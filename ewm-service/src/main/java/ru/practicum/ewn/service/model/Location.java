@@ -1,6 +1,7 @@
 package ru.practicum.ewn.service.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -8,8 +9,9 @@ import javax.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Builder
+@Accessors(chain = true)
 @Entity
+@Table(name = "locations")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
