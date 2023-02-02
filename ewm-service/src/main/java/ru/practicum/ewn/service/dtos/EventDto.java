@@ -1,10 +1,13 @@
 package ru.practicum.ewn.service.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 import ru.practicum.ewn.service.enums.EventState;
 import ru.practicum.ewn.service.model.Location;
+
+import java.time.LocalDateTime;
 
 @Value
 @Builder
@@ -14,14 +17,17 @@ public class EventDto {
     String annotation;
     CategoryDto category;
     Integer confirmedRequests;
-    String createdOn;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime createdOn;
     String description;
-    String eventDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime eventDate;
     UserShortDto initiator;
-    Location location;
+    LocationDto location;
     Boolean paid;
     Integer participantLimit;
-    String publishedOn;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime publishedOn;
     Boolean requestModeration;
     EventState eventState;
     String title;

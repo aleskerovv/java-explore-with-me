@@ -2,6 +2,7 @@ package ru.practicum.ewn.service.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.client.StatsClient;
 import ru.practicum.ewm.dto.EndpointHitDto;
@@ -23,8 +24,8 @@ public class EventController {
     private final StatsClient statsClient;
 
     @GetMapping("{id}")
-    public EventDto getEventById(@PathVariable Long id, HttpServletRequest servletRequest) {
-        String appName = "ewm-main-service";
+    public EventDto getEventById(@PathVariable Long id, HttpServletRequest servletRequest,
+                                 @Value("${main.service.name}") String appName) {
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .ip(servletRequest.getRemoteAddr())
                 .uri(servletRequest.getRequestURI())

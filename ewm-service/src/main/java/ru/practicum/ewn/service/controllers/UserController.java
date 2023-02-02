@@ -1,9 +1,38 @@
 package ru.practicum.ewn.service.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewn.service.dtos.EventDto;
+import ru.practicum.ewn.service.dtos.EventShortDto;
+import ru.practicum.ewn.service.dtos.NewEventDto;
+import ru.practicum.ewn.service.services.EventServiceImpl;
+
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
+@RequiredArgsConstructor
 public class UserController {
+    private final EventServiceImpl eventService;
+
+    @PostMapping("{id}/events")
+    @ResponseStatus(HttpStatus.CREATED)
+    public EventDto createEvent(@PathVariable Long id, @RequestBody NewEventDto eventDto) {
+        return eventService.createEvent(eventDto, id);
+    }
+
+    @GetMapping("{id}/events")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EventShortDto> getEventsByInitiatorId(@PathVariable Long id,
+                                                      @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
+                                                      @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
+        Pageable pageable = PageRequest.of(from, size);
+
+        return eventService.getEventsByInitiatorId(id, pageable);
+    }
 }

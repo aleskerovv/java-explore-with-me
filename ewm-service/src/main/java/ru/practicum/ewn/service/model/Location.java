@@ -17,10 +17,8 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private float latitude;
-
-    private float longitude;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "event_id", referencedColumnName = "id")
-    private Event event;
+    @Column(name = "latitude")
+    private Float lat;
+    @Column(name = "longitude")
+    private Float lon;
 }

@@ -1,4 +1,4 @@
-package ru.practicum.ewn.service.utils;
+package ru.practicum.ewn.service.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

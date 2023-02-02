@@ -17,4 +17,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "JOIN FETCH ev.location evl " +
             "JOIN FETCH ev.category evc")
     List<Event> findAllWithOptionals(Pageable pageable);
+
+    List<Event> findAllByInitiatorId(Long id, Pageable pageable);
 }

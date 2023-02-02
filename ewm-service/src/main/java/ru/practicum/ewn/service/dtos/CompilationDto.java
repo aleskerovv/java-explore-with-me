@@ -10,7 +10,7 @@ import java.util.List;
 @Value
 @Builder
 @Jacksonized
-public class CompilationDto implements Serializable {
+public class CompilationDto {
     Long id;
     List<EventShortDto> events;
     Boolean pinned;

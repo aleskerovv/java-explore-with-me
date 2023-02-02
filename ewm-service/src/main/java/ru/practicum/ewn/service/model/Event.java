@@ -19,15 +19,15 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String annotation;
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-    @ToString.Exclude
     private Category category;
     private String description;
     private LocalDateTime createdOn;
     private LocalDateTime eventDate;
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @ToString.Exclude
     private Location location;
     private Boolean paid;
     private Integer participantLimit;

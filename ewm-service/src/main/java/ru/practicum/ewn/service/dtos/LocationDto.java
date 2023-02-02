@@ -7,7 +7,7 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Builder
 @Jacksonized
-public class UserShortDto {
-    Long id;
-    String name;
+public class LocationDto {
+    Float lat;
+    Float lon;
 }
