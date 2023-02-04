@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewn.service.dtos.EventDto;
 import ru.practicum.ewn.service.dtos.EventShortDto;
 import ru.practicum.ewn.service.dtos.NewEventDto;
+import ru.practicum.ewn.service.dtos.ParticipantRequestDtoResponse;
 import ru.practicum.ewn.service.services.EventServiceImpl;
+import ru.practicum.ewn.service.services.UserServiceImpl;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final EventServiceImpl eventService;
+    private final UserServiceImpl userService;
 
     @PostMapping("{id}/events")
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,5 +37,12 @@ public class UserController {
         Pageable pageable = PageRequest.of(from, size);
 
         return eventService.getEventsByInitiatorId(id, pageable);
+    }
+
+    @PostMapping("{userId}/requests")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ParticipantRequestDtoResponse sendParticipantRequest(@PathVariable(name = "userId") Long userId,
+                                                                @RequestParam(name = "eventId") Long eventId) {
+        return userService.sendParticipantRequest(userId, eventId);
     }
 }

@@ -1,24 +1,20 @@
 package ru.practicum.ewn.service.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @Accessors(chain = true)
-@Entity
-@Table(name = "locations")
+@Embeddable
 public class Location {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "latitude")
     private Float lat;
-    @Column(name = "longitude")
     private Float lon;
 }

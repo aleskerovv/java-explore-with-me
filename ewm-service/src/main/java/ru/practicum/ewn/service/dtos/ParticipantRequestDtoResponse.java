@@ -1,5 +1,6 @@
 package ru.practicum.ewn.service.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -11,9 +12,10 @@ import java.time.LocalDateTime;
 @Builder
 @Jacksonized
 public class ParticipantRequestDtoResponse {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime created;
-    Integer event;
+    Long event;
     Integer id;
-    Integer requester;
+    Long requester;
     RequestStatus requestStatus;
 }

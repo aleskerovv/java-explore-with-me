@@ -2,10 +2,12 @@ package ru.practicum.ewn.service.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.Hibernate;
 import ru.practicum.ewn.service.enums.EventState;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,9 +27,9 @@ public class Event {
     private String description;
     private LocalDateTime createdOn;
     private LocalDateTime eventDate;
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    @ToString.Exclude
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "lat", column = @Column(name = "latitude")),
+    @AttributeOverride(name = "lon", column = @Column(name = "longitude"))})
     private Location location;
     private Boolean paid;
     private Integer participantLimit;
@@ -40,4 +42,17 @@ public class Event {
     private LocalDateTime publishedOn;
     @Enumerated(EnumType.STRING)
     private EventState eventState;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Event event = (Event) o;
+        return id != null && Objects.equals(id, event.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

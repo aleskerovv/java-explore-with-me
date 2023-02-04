@@ -9,10 +9,10 @@ import ru.practicum.ewm.dto.EndpointHitDto;
 import ru.practicum.ewn.service.dtos.EventDto;
 import ru.practicum.ewn.service.dtos.EventShortDto;
 import ru.practicum.ewn.service.services.EventServiceImpl;
+import ru.practicum.ewn.service.utils.UserEventFilter;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class EventController {
-    private final EventServiceImpl eventServiceImpl;
+    private final EventServiceImpl eventService;
     private final StatsClient statsClient;
 
     @GetMapping("{id}")
@@ -35,12 +35,14 @@ public class EventController {
 //        statsClient.post(endpointHitDto);
         log.info(endpointHitDto.toString());
 
-        return eventServiceImpl.getEventById(id);
+        return eventService.getEventById(id);
     }
 
+
     @GetMapping
-    public List<EventShortDto> getAllEvents(@PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
-                                            @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
-        return eventServiceImpl.findAllEvents(from, size);
+    public List<EventShortDto> getAllEvents(@Valid @ModelAttribute("userEventFilter") UserEventFilter userEventFilter,
+                                            @RequestParam(name = "from", defaultValue = "0", required = false) Integer from,
+                                            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size) {
+        return eventService.findEventsByUsersFilters(userEventFilter, from, size);
     }
 }

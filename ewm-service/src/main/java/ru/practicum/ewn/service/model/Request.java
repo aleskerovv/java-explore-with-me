@@ -26,5 +26,6 @@ public class Request {
     @OneToOne
     @JoinColumn(name = "requester_id", referencedColumnName = "id")
     private User requester;
-    RequestStatus status;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
 }

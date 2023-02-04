@@ -10,4 +10,7 @@ public interface CategoryMapper {
     Category toEntity(CategoryDtoCreate categoryDto);
 
     CategoryDto toDto(Category category);
+
+    @Named("toCategory")
+    Category map(Long id);
 }
