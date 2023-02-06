@@ -1,12 +1,9 @@
 package ru.practicum.ewn.service.utils;
 
 import org.mapstruct.*;
-import ru.practicum.ewn.service.dtos.EventDto;
-import ru.practicum.ewn.service.dtos.EventShortDto;
-import ru.practicum.ewn.service.dtos.NewEventDto;
-import ru.practicum.ewn.service.dtos.UpdateEventAdminRequest;
-import ru.practicum.ewn.service.model.Category;
-import ru.practicum.ewn.service.model.Event;
+import ru.practicum.ewn.service.events.dto.*;
+import ru.practicum.ewn.service.category.model.Category;
+import ru.practicum.ewn.service.events.model.Event;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = CategoryMapper.class)
 public interface EventMapper {
@@ -17,9 +14,9 @@ public interface EventMapper {
 
     EventShortDto toShortDto(Event event);
 
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    @Mapping(target = "category.id", source = "category")
-//    void partialUpdate(EventDto eventDto, @MappingTarget Event event);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "category.id", source = "category")
+    void partialUpdate(UserEventUpdateDto eventDto, @MappingTarget Event event);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "category.id", source = "category")

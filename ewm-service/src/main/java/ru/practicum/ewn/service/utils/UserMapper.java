@@ -1,10 +1,10 @@
 package ru.practicum.ewn.service.utils;
 
 import org.mapstruct.*;
-import ru.practicum.ewn.service.dtos.UserDtoCreate;
-import ru.practicum.ewn.service.dtos.UserDtoResponse;
-import ru.practicum.ewn.service.dtos.UserShortDto;
-import ru.practicum.ewn.service.model.User;
+import ru.practicum.ewn.service.users.dto.UserDtoCreate;
+import ru.practicum.ewn.service.users.dto.UserDtoResponse;
+import ru.practicum.ewn.service.users.dto.UserShortDto;
+import ru.practicum.ewn.service.users.model.User;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface UserMapper {

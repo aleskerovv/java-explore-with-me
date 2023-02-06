@@ -1,9 +1,9 @@
 package ru.practicum.ewn.service.utils;
 
 import org.mapstruct.*;
-import ru.practicum.ewn.service.dtos.CategoryDto;
-import ru.practicum.ewn.service.dtos.CategoryDtoCreate;
-import ru.practicum.ewn.service.model.Category;
+import ru.practicum.ewn.service.category.dto.CategoryDto;
+import ru.practicum.ewn.service.category.dto.CategoryDtoCreate;
+import ru.practicum.ewn.service.category.model.Category;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface CategoryMapper {

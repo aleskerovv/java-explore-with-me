@@ -3,7 +3,7 @@ package ru.practicum.ewn.service.utils;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
 import ru.practicum.ewn.service.enums.EventState;
-import ru.practicum.ewn.service.model.Event;
+import ru.practicum.ewn.service.events.model.Event;
 
 import java.time.LocalDateTime;
 import java.util.List;

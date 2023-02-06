@@ -2,9 +2,7 @@ package ru.practicum.ewm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
-import lombok.experimental.Accessors;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotNull;
