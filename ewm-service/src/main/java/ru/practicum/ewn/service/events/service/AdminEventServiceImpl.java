@@ -13,14 +13,13 @@ import ru.practicum.ewn.service.enums.StateAction;
 import ru.practicum.ewn.service.events.dao.EventRepository;
 import ru.practicum.ewn.service.events.dto.EventDto;
 import ru.practicum.ewn.service.events.dto.UpdateEventAdminRequest;
+import ru.practicum.ewn.service.events.mapper.EventMapper;
 import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.handlers.DataValidationException;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 import ru.practicum.ewn.service.utils.AdminEventFilter;
-import ru.practicum.ewn.service.events.mapper.EventMapper;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static ru.practicum.ewn.service.utils.AdminEventSpecification.getAdminsFilters;
@@ -30,7 +29,7 @@ import static ru.practicum.ewn.service.utils.DataChecker.dateTimeChecker;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AdminEventServiceImpl implements AdminEventService{
+public class AdminEventServiceImpl implements AdminEventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
 
@@ -62,14 +61,6 @@ public class AdminEventServiceImpl implements AdminEventService{
                 && event.getEventState() == EventState.PUBLISHED) {
             throw new DataValidationException("Published event can not be rejected");
         }
-
-//        if (updateRequest.getStateAction() == StateAction.PUBLISH_EVENT) {
-//            event.setPublishedOn(LocalDateTime.now());
-//            event.setEventState(EventState.PUBLISHED);
-//        }
-//
-//        if (updateRequest.getStateAction() == StateAction.REJECT_EVENT)
-//            event.setEventState(EventState.CANCELED);
 
         checkActionState(updateRequest.getStateAction(), event);
 

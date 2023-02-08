@@ -7,7 +7,6 @@ import lombok.extern.jackson.Jacksonized;
 import ru.practicum.ewn.service.events.model.Location;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 

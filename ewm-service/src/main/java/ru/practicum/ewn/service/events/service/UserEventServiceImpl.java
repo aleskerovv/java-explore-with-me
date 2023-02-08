@@ -11,18 +11,17 @@ import ru.practicum.ewn.service.category.dao.CategoryRepository;
 import ru.practicum.ewn.service.category.model.Category;
 import ru.practicum.ewn.service.enums.EventState;
 import ru.practicum.ewn.service.enums.RequestStatus;
-import ru.practicum.ewn.service.enums.StateAction;
 import ru.practicum.ewn.service.events.dao.EventRepository;
 import ru.practicum.ewn.service.events.dao.RequestRepository;
 import ru.practicum.ewn.service.events.dto.*;
+import ru.practicum.ewn.service.events.mapper.EventMapper;
 import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.events.model.Request;
+import ru.practicum.ewn.service.events.model.RequestMapper;
 import ru.practicum.ewn.service.handlers.DataValidationException;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 import ru.practicum.ewn.service.users.dao.UserRepository;
 import ru.practicum.ewn.service.users.model.User;
-import ru.practicum.ewn.service.events.mapper.EventMapper;
-import ru.practicum.ewn.service.events.model.RequestMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -113,12 +112,6 @@ public class UserEventServiceImpl implements UserEventService {
             throw new DataValidationException("Only pending or canceled event can be edited");
         }
 
-//        if (eventDto.getStateAction() == StateAction.CANCEL_REVIEW) {
-//            event.setEventState(EventState.CANCELED);
-//        }
-//
-//        if (eventDto.getStateAction() == StateAction.SEND_TO_REVIEW)
-//            event.setEventState(EventState.PENDING);
         checkActionState(eventDto.getStateAction(), event);
 
         eventMapper.partialUpdate(eventDto, event);

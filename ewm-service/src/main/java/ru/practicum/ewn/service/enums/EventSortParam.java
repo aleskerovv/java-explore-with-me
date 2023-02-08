@@ -6,7 +6,7 @@ public enum EventSortParam {
 
     private final String sortParam;
 
-    EventSortParam(String sortParam){
+    EventSortParam(String sortParam) {
         this.sortParam = sortParam;
     }
 
@@ -14,8 +14,8 @@ public enum EventSortParam {
         return sortParam;
     }
 
-    public static EventSortParam  fromParam(String sortParam) {
-        for (EventSortParam eventSortParam:EventSortParam.values()) {
+    public static EventSortParam fromParam(String sortParam) {
+        for (EventSortParam eventSortParam : EventSortParam.values()) {
             if (eventSortParam.getSortParam().equals(sortParam))
                 return eventSortParam;
         }

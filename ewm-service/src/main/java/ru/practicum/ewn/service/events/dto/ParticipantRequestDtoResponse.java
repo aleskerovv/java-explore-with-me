@@ -2,7 +2,6 @@ package ru.practicum.ewn.service.events.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;

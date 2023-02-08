@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class StatisticServiceImpl implements StatisticService{
+public class StatisticServiceImpl implements StatisticService {
     private final StatsClient statsClient;
 
     @Override

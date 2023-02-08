@@ -1,15 +1,13 @@
 package ru.practicum.ewn.service.compilations.mapper;
 
-import org.mapstruct.*;
-import ru.practicum.ewn.service.compilations.CompilationController;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import ru.practicum.ewn.service.compilations.dto.CompilationDto;
 import ru.practicum.ewn.service.compilations.dto.CompilationDtoCreate;
-import ru.practicum.ewn.service.compilations.dto.CompilationUpdateDto;
 import ru.practicum.ewn.service.compilations.model.Compilation;
 import ru.practicum.ewn.service.events.model.Event;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
