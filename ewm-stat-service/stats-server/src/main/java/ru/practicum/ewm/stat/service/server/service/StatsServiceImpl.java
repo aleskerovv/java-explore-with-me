@@ -5,15 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewm.dto.*;
+import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitResponseDto;
+import ru.practicum.ewm.dto.StatisticCount;
+import ru.practicum.ewm.dto.ViewStatisticsDto;
 import ru.practicum.ewm.stat.service.server.model.EndpointHit;
 import ru.practicum.ewm.stat.service.server.repository.StatsRepository;
 import ru.practicum.ewm.stat.service.server.utils.EndpointHitMapper;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

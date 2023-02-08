@@ -1,6 +1,8 @@
 package ru.practicum.ewm.stat.service.server.service;
 
-import ru.practicum.ewm.dto.*;
+import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitResponseDto;
+import ru.practicum.ewm.dto.ViewStatisticsDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
