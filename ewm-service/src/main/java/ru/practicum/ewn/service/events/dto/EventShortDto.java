@@ -3,7 +3,6 @@ package ru.practicum.ewn.service.events.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 import ru.practicum.ewn.service.category.dto.CategoryDto;
 import ru.practicum.ewn.service.users.dto.UserShortDto;

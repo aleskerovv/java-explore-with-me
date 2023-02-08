@@ -1,4 +1,4 @@
-package ru.practicum.ewn.service;
+package ru.practicum.ewn.service.common;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,13 +7,17 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewn.service.category.dto.CategoryDto;
 import ru.practicum.ewn.service.category.dto.CategoryDtoCreate;
-import ru.practicum.ewn.service.category.service.CategoryServiceImpl;
+import ru.practicum.ewn.service.category.service.CategoryService;
+import ru.practicum.ewn.service.compilations.dto.CompilationDto;
+import ru.practicum.ewn.service.compilations.dto.CompilationDtoCreate;
+import ru.practicum.ewn.service.compilations.dto.CompilationUpdateDto;
+import ru.practicum.ewn.service.compilations.service.CompilationService;
 import ru.practicum.ewn.service.events.dto.EventDto;
 import ru.practicum.ewn.service.events.dto.UpdateEventAdminRequest;
 import ru.practicum.ewn.service.events.service.AdminEventService;
 import ru.practicum.ewn.service.users.dto.UserDtoCreate;
 import ru.practicum.ewn.service.users.dto.UserDtoResponse;
-import ru.practicum.ewn.service.users.service.UserServiceImpl;
+import ru.practicum.ewn.service.users.service.UserService;
 import ru.practicum.ewn.service.utils.AdminEventFilter;
 
 import javax.validation.Valid;
@@ -28,12 +32,14 @@ import java.util.List;
 @RequestMapping("/admin")
 @Slf4j
 public class AdminController {
-    private final UserServiceImpl userService;
-    private final CategoryServiceImpl categoryService;
-    private final AdminEventService eventService;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final AdminEventService adminEventService;
+    private final CompilationService compilationService;
     private static final String USERS = "/users";
     private static final String CATEGORIES = "/categories";
     private static final String EVENTS = "/events";
+    private static final String COMPILATIONS = "/compilations";
 
     @PostMapping(USERS)
     @ResponseStatus(HttpStatus.CREATED)
@@ -78,13 +84,31 @@ public class AdminController {
     public List<EventDto> getAllEvents(@Valid @ModelAttribute("userEventFilter") AdminEventFilter adminEventFilter,
                                        @RequestParam(name = "from", defaultValue = "0", required = false) Integer from,
                                        @RequestParam(name = "size", defaultValue = "10", required = false) Integer size) {
-        return eventService.adminGetEvents(adminEventFilter, from, size);
+        return adminEventService.adminGetEvents(adminEventFilter, from, size);
     }
 
     @PatchMapping(EVENTS + "/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventDto updateEvent(@PathVariable Long eventId,
                                 @RequestBody UpdateEventAdminRequest request) {
-        return eventService.updateEventByAdmin(eventId, request);
+        return adminEventService.updateEventByAdmin(eventId, request);
+    }
+
+    @PostMapping(COMPILATIONS)
+    @ResponseStatus(HttpStatus.CREATED)
+    public CompilationDto createCompilation(@Valid @RequestBody CompilationDtoCreate compilationDto) {
+        return compilationService.createCompilation(compilationDto);
+    }
+
+    @PatchMapping(COMPILATIONS + "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CompilationDto updateCompilation(@RequestBody CompilationUpdateDto compilationDto, @PathVariable Long id) {
+        return compilationService.updateCompilation(id, compilationDto);
+    }
+
+    @DeleteMapping(COMPILATIONS + "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        compilationService.deleteCompilation(id);
     }
 }

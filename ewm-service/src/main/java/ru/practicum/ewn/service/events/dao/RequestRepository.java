@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.practicum.ewn.service.events.model.Request;
 import ru.practicum.ewn.service.events.model.RequestCount;
-import ru.practicum.ewn.service.utils.RequestsCount;
 
 import java.util.List;
 import java.util.Optional;

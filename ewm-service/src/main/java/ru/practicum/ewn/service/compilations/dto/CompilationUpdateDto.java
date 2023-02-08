@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Jacksonized
 public class CompilationUpdateDto {
-    List<Integer> events;
+    List<Long> events;
     Boolean pinned;
     String title;
 }

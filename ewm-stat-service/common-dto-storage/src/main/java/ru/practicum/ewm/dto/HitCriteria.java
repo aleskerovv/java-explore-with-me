@@ -17,6 +17,6 @@ public class HitCriteria {
     private LocalDateTime start;
     @NotNull(message = "'end' can not be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime end;
-    private boolean isUnique;
+    private LocalDateTime end = LocalDateTime.now();
+    private boolean isUnique = false;
 }

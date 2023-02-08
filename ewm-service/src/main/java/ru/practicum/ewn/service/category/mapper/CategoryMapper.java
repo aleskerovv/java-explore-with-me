@@ -1,4 +1,4 @@
-package ru.practicum.ewn.service.utils;
+package ru.practicum.ewn.service.category.mapper;
 
 import org.mapstruct.*;
 import ru.practicum.ewn.service.category.dto.CategoryDto;

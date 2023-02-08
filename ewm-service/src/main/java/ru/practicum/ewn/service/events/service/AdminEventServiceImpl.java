@@ -11,23 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewn.service.enums.EventState;
 import ru.practicum.ewn.service.enums.StateAction;
 import ru.practicum.ewn.service.events.dao.EventRepository;
-import ru.practicum.ewn.service.events.dao.RequestRepository;
 import ru.practicum.ewn.service.events.dto.EventDto;
-import ru.practicum.ewn.service.events.dto.EventShortDto;
 import ru.practicum.ewn.service.events.dto.UpdateEventAdminRequest;
 import ru.practicum.ewn.service.events.model.Event;
-import ru.practicum.ewn.service.events.model.RequestCountStub;
 import ru.practicum.ewn.service.handlers.DataValidationException;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 import ru.practicum.ewn.service.utils.AdminEventFilter;
-import ru.practicum.ewn.service.utils.EventMapper;
-import ru.practicum.ewn.service.utils.RequestMapper;
+import ru.practicum.ewn.service.events.mapper.EventMapper;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static ru.practicum.ewn.service.utils.AdminEventSpecification.getAdminsFilters;
+import static ru.practicum.ewn.service.utils.DataChecker.checkActionState;
 import static ru.practicum.ewn.service.utils.DataChecker.dateTimeChecker;
 
 @Service
@@ -66,13 +63,15 @@ public class AdminEventServiceImpl implements AdminEventService{
             throw new DataValidationException("Published event can not be rejected");
         }
 
-        if (updateRequest.getStateAction() == StateAction.PUBLISH_EVENT) {
-            event.setPublishedOn(LocalDateTime.now());
-            event.setEventState(EventState.PUBLISHED);
-        }
+//        if (updateRequest.getStateAction() == StateAction.PUBLISH_EVENT) {
+//            event.setPublishedOn(LocalDateTime.now());
+//            event.setEventState(EventState.PUBLISHED);
+//        }
+//
+//        if (updateRequest.getStateAction() == StateAction.REJECT_EVENT)
+//            event.setEventState(EventState.CANCELED);
 
-        if (updateRequest.getStateAction() == StateAction.REJECT_EVENT)
-            event.setEventState(EventState.CANCELED);
+        checkActionState(updateRequest.getStateAction(), event);
 
         eventMapper.partialUpdate(updateRequest, event);
 
@@ -83,18 +82,4 @@ public class AdminEventServiceImpl implements AdminEventService{
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException(String.format("event with id %d not found", eventId)));
     }
-
-//    private void setConfirmedRequests(List<EventDto> events) {
-//        Map<Long, EventDto> eventsMap = new HashMap<>();
-//        events.forEach(event -> eventsMap.put(event.getId(), event));
-//
-//        if (!eventsMap.isEmpty()) {
-//            List<RequestCountStub> counts = requestRepository.getRequestsForEvents(eventsMap.keySet()).stream()
-//                    .map(requestMapper::toStub)
-//                    .collect(Collectors.toList());
-//
-//            counts.forEach(stub -> Optional.ofNullable(eventsMap.get(stub.getEventId()))
-//                    .ifPresent(e -> e.setConfirmedRequests(stub.getRequests().intValue())));
-//        }
-//    }
 }

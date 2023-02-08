@@ -1,15 +1,21 @@
 package ru.practicum.ewn.service.events.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
-import ru.practicum.ewn.service.enums.EventState;
 import ru.practicum.ewn.service.category.model.Category;
+import ru.practicum.ewn.service.compilations.model.Compilation;
+import ru.practicum.ewn.service.enums.EventState;
 import ru.practicum.ewn.service.users.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,8 +29,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String annotation;
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    @ToString.Exclude
     private Category category;
     private Integer confirmedRequests;
     private String description;
@@ -45,6 +52,9 @@ public class Event {
     private LocalDateTime publishedOn;
     @Enumerated(EnumType.STRING)
     private EventState eventState;
+    @ManyToMany(mappedBy = "events")
+    @ToString.Exclude
+    private Set<Compilation> compilations = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

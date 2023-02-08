@@ -14,14 +14,14 @@ import ru.practicum.ewn.service.events.dao.RequestRepository;
 import ru.practicum.ewn.service.events.dto.ParticipantRequestDtoResponse;
 import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.events.model.Request;
+import ru.practicum.ewn.service.events.model.RequestMapper;
 import ru.practicum.ewn.service.handlers.DataValidationException;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 import ru.practicum.ewn.service.users.dao.UserRepository;
 import ru.practicum.ewn.service.users.dto.UserDtoCreate;
 import ru.practicum.ewn.service.users.dto.UserDtoResponse;
+import ru.practicum.ewn.service.users.mapper.UserMapper;
 import ru.practicum.ewn.service.users.model.User;
-import ru.practicum.ewn.service.utils.RequestMapper;
-import ru.practicum.ewn.service.utils.UserMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
     private final RequestMapper requestMapper;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -108,17 +108,16 @@ public class UserServiceImpl {
 
 
         if (event.getInitiator().equals(user))
-            throw new DataValidationException("нельзя отправить самому себе");
+            throw new DataValidationException("You can not send request for own event");
+
+        if (event.getConfirmedRequests() == event.getParticipantLimit())
+            throw new DataValidationException("Participant limit for event exceeded");
 
         if (!event.getEventState().equals(EventState.PUBLISHED))
-            throw new DataValidationException("нельзя в неопубликованном");
-
-        if (requestRepository.findRequestsCount(eventId).getCount() == event.getParticipantLimit()) {
-            throw new DataValidationException("лимит участников исчерпан");
-        }
+            throw new DataValidationException("Can not send request for not published event");
 
         if (!requestRepository.findRequestByRequesterIdAndEventId(userId, eventId).isEmpty()) {
-            throw new DataValidationException("нельзя повторно отправить заявку");
+            throw new DataValidationException("You already sent participation request for this event");
         }
 
         request.setRequester(user)

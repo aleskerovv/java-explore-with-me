@@ -1,4 +1,4 @@
-package ru.practicum.ewn.service.utils;
+package ru.practicum.ewn.service.users.mapper;
 
 import org.mapstruct.*;
 import ru.practicum.ewn.service.users.dto.UserDtoCreate;

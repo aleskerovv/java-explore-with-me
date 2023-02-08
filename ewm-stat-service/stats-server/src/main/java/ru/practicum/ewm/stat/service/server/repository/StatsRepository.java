@@ -40,10 +40,4 @@ public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
             "group by app, uri " +
             "order by hits desc", nativeQuery = true)
     List<StatisticCount> getAllHits(LocalDateTime startDate, LocalDateTime endDate);
-
-    @Query("SELECT h.app as app, h.uri as uri, count(h.ip) as hits " +
-            "from EndpointHit h " +
-            "where uri = :uri " +
-            "group by app, uri")
-    StatisticCount getByUri(String uri);
 }

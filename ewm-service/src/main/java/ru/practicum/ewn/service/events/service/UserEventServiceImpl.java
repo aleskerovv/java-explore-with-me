@@ -21,8 +21,8 @@ import ru.practicum.ewn.service.handlers.DataValidationException;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 import ru.practicum.ewn.service.users.dao.UserRepository;
 import ru.practicum.ewn.service.users.model.User;
-import ru.practicum.ewn.service.utils.EventMapper;
-import ru.practicum.ewn.service.utils.RequestMapper;
+import ru.practicum.ewn.service.events.mapper.EventMapper;
+import ru.practicum.ewn.service.events.model.RequestMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static ru.practicum.ewn.service.utils.DataChecker.checkActionState;
 import static ru.practicum.ewn.service.utils.DataChecker.dateTimeChecker;
 
 @Service
@@ -74,14 +75,8 @@ public class UserEventServiceImpl implements UserEventService {
                 .setCreatedOn(LocalDateTime.now())
                 .setEventDate(eventDto.getEventDate())
                 .setCategory(category)
-                .setConfirmedRequests(0);
-
-        if (event.getRequestModeration()) {
-            event.setEventState(EventState.PENDING);
-        } else {
-            event.setEventState(EventState.PUBLISHED);
-            event.setPublishedOn(LocalDateTime.now());
-        }
+                .setConfirmedRequests(0)
+                .setEventState(EventState.PENDING);
 
         return eventMapper.toDto(eventRepository.save(event));
     }
@@ -110,20 +105,21 @@ public class UserEventServiceImpl implements UserEventService {
 
         dateTimeChecker(eventDto.getEventDate());
 
-        getUserIfExists(userId);
-
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException("event not found"));
+        Event event = Optional.of(eventRepository.findEventByIdAndInitiator(eventId, getUserIfExists(userId)))
+                .orElseThrow(() -> new NotFoundException(String.format("event with id %d for user with id %d not found",
+                        eventId, userId)));
 
         if (event.getEventState() == EventState.PUBLISHED) {
             throw new DataValidationException("Only pending or canceled event can be edited");
         }
 
-        if (eventDto.getStateAction() == StateAction.CANCEL_REVIEW) {
-            event.setEventState(EventState.CANCELED);
-        }
-
-        if (eventDto.getStateAction() == StateAction.SEND_TO_REVIEW)
-            event.setEventState(EventState.PENDING);
+//        if (eventDto.getStateAction() == StateAction.CANCEL_REVIEW) {
+//            event.setEventState(EventState.CANCELED);
+//        }
+//
+//        if (eventDto.getStateAction() == StateAction.SEND_TO_REVIEW)
+//            event.setEventState(EventState.PENDING);
+        checkActionState(eventDto.getStateAction(), event);
 
         eventMapper.partialUpdate(eventDto, event);
 
@@ -147,9 +143,9 @@ public class UserEventServiceImpl implements UserEventService {
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public EventRequestStatusUpdateResult approveRequests(Long userId,
-                                                          Long eventId,
-                                                          EventRequestStatusUpdateRequest updateRequest) {
+    public EventRequestStatusUpdateResult updateRequestStatus(Long userId,
+                                                              Long eventId,
+                                                              EventRequestStatusUpdateRequest updateRequest) {
 
         Event event = getEventIfExists(eventId);
 

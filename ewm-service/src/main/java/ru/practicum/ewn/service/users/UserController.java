@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewn.service.events.dto.*;
 import ru.practicum.ewn.service.events.service.UserEventService;
-import ru.practicum.ewn.service.users.service.UserServiceImpl;
+import ru.practicum.ewn.service.users.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -16,8 +16,8 @@ import java.util.List;
 @RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserEventService eventService;
-    private final UserServiceImpl userService;
+    private final UserEventService userEventService;
+    private final UserService userService;
 
     @GetMapping("{id}/events")
     @ResponseStatus(HttpStatus.OK)
@@ -25,27 +25,27 @@ public class UserController {
                                                       @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                                       @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
 
-        return eventService.getEventsByUserId(id, from, size);
+        return userEventService.getEventsByUserId(id, from, size);
     }
 
     @GetMapping("{userId}/events/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventDto getEventByUserAndEventId(@PathVariable Long userId,
                                              @PathVariable Long eventId) {
-        return eventService.getEventById(userId, eventId);
+        return userEventService.getEventById(userId, eventId);
     }
 
     @PostMapping("{id}/events")
     @ResponseStatus(HttpStatus.CREATED)
     public EventDto createEvent(@PathVariable Long id, @Valid @RequestBody NewEventDto eventDto) {
-        return eventService.createEventByUser(id, eventDto);
+        return userEventService.createEventByUser(id, eventDto);
     }
 
     @PatchMapping("{userId}/events/{eventId}")
     public EventDto updateEventByUser(@PathVariable Long userId,
                                       @PathVariable Long eventId,
                                       @RequestBody UserEventUpdateDto eventDto) {
-        return eventService.updateUsersEventById(userId, eventId, eventDto);
+        return userEventService.updateUsersEventById(userId, eventId, eventDto);
     }
 
     @PostMapping("{userId}/requests")
@@ -71,7 +71,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipantRequestDtoResponse> getEventsRequests(@PathVariable Long userId,
                                                                  @PathVariable Long eventId) {
-        return eventService.getEventsRequests(userId, eventId);
+        return userEventService.getEventsRequests(userId, eventId);
     }
 
     @PatchMapping("{userId}/events/{eventId}/requests")
@@ -79,6 +79,6 @@ public class UserController {
     public EventRequestStatusUpdateResult approveRequests(@PathVariable Long userId,
                                                           @PathVariable Long eventId,
                                                           @RequestBody EventRequestStatusUpdateRequest request) {
-        return eventService.approveRequests(userId, eventId, request);
+        return userEventService.updateRequestStatus(userId, eventId, request);
     }
 }

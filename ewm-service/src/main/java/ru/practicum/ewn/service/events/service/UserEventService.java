@@ -15,5 +15,5 @@ public interface UserEventService {
 
     List<ParticipantRequestDtoResponse> getEventsRequests(Long userId, Long eventId);
 
-    EventRequestStatusUpdateResult approveRequests(Long userId, Long eventId, EventRequestStatusUpdateRequest request);
+    EventRequestStatusUpdateResult updateRequestStatus(Long userId, Long eventId, EventRequestStatusUpdateRequest request);
 }
