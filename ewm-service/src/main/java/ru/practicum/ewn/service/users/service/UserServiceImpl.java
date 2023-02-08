@@ -25,6 +25,7 @@ import ru.practicum.ewn.service.users.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
         if (event.getInitiator().equals(user))
             throw new DataValidationException("You can not send request for own event");
 
-        if (event.getConfirmedRequests() == event.getParticipantLimit())
+        if (Objects.equals(event.getConfirmedRequests(), event.getParticipantLimit()))
             throw new DataValidationException("Participant limit for event exceeded");
 
         if (!event.getEventState().equals(EventState.PUBLISHED))
