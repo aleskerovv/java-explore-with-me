@@ -18,7 +18,6 @@ import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
