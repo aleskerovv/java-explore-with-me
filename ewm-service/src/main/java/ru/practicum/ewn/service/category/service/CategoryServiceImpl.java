@@ -7,15 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewn.service.category.dao.CategoryRepository;
 import ru.practicum.ewn.service.category.dto.CategoryDto;
 import ru.practicum.ewn.service.category.dto.CategoryDtoCreate;
-import ru.practicum.ewn.service.handlers.NotFoundException;
-import ru.practicum.ewn.service.category.model.Category;
-import ru.practicum.ewn.service.category.dao.CategoryRepository;
 import ru.practicum.ewn.service.category.mapper.CategoryMapper;
+import ru.practicum.ewn.service.category.model.Category;
+import ru.practicum.ewn.service.handlers.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
