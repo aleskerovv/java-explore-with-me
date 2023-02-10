@@ -1,6 +1,8 @@
 package ru.practicum.ewn.service.category.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 import ru.practicum.ewn.service.category.dto.CategoryDto;
 import ru.practicum.ewn.service.category.dto.CategoryDtoCreate;
 import ru.practicum.ewn.service.category.model.Category;

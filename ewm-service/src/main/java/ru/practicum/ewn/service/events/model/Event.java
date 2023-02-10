@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.hibernate.Hibernate;
 import ru.practicum.ewn.service.category.model.Category;
 import ru.practicum.ewn.service.compilations.model.Compilation;
 import ru.practicum.ewn.service.enums.EventState;
@@ -13,9 +12,7 @@ import ru.practicum.ewn.service.users.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,7 +36,7 @@ public class Event {
     private LocalDateTime eventDate;
     @Embedded
     @AttributeOverrides({@AttributeOverride(name = "lat", column = @Column(name = "latitude")),
-    @AttributeOverride(name = "lon", column = @Column(name = "longitude"))})
+            @AttributeOverride(name = "lon", column = @Column(name = "longitude"))})
     private Location location;
     private Boolean paid;
     private Integer participantLimit;
@@ -54,18 +51,5 @@ public class Event {
     private EventState eventState;
     @ManyToMany(mappedBy = "events")
     @ToString.Exclude
-    private Set<Compilation> compilations = new HashSet<>();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Event event = (Event) o;
-        return id != null && Objects.equals(id, event.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+    private List<Compilation> compilations;
 }

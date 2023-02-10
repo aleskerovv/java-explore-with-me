@@ -1,27 +1,29 @@
 package ru.practicum.ewn.service.events.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import ru.practicum.ewn.service.enums.StateAction;
 import ru.practicum.ewn.service.events.model.Location;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
-@Value
 @Jacksonized
 public class UpdateEventAdminRequest {
-    String annotation;
-    Integer category;
-    String description;
+    private String annotation;
+    private Integer category;
+    private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
-    Location location;
-    Boolean paid;
-    Integer participantLimit;
-    Boolean requestModeration;
-    StateAction stateAction;
-    String title;
+    private LocalDateTime eventDate;
+    private Location location;
+    private Boolean paid;
+    private Integer participantLimit;
+    private Boolean requestModeration;
+    private StateAction stateAction;
+    private String title;
 }

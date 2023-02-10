@@ -6,33 +6,41 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.dto.EndpointHitDto;
-import ru.practicum.ewm.dto.EndpointHitResponseDto;
 import ru.practicum.ewm.dto.StatisticCount;
 import ru.practicum.ewm.dto.ViewStatisticsDto;
+import ru.practicum.ewm.stat.service.server.model.Application;
 import ru.practicum.ewm.stat.service.server.model.EndpointHit;
+import ru.practicum.ewm.stat.service.server.repository.ApplicationRepository;
 import ru.practicum.ewm.stat.service.server.repository.StatsRepository;
 import ru.practicum.ewm.stat.service.server.utils.EndpointHitMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class StatsServiceImpl implements StatsService {
     private final EndpointHitMapper mapper;
-    private final StatsRepository repository;
+    private final StatsRepository statsRepository;
+    private final ApplicationRepository appRepository;
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public EndpointHitResponseDto saveStatistics(EndpointHitDto dto) {
-        EndpointHit endpointHit = repository.save(mapper.toEndpointHitEntity(dto));
+    public void saveStatistics(EndpointHitDto dto) {
+        EndpointHit endpointHit = mapper.toEndpointHitEntity(dto);
 
-        EndpointHitResponseDto endpointHitDto = mapper.toResponseDto(endpointHit);
+        Application app = appRepository.findByName(endpointHit.getApp().getName())
+                .or(() -> Optional.of(appRepository.save(endpointHit.getApp())))
+                .orElseThrow(() -> new NoSuchElementException("Unexpected error"));
+
+        endpointHit.getApp().setId(app.getId());
+
+        statsRepository.save(endpointHit);
 
         log.info("created new endpoint hit: {}", endpointHit);
-
-        return endpointHitDto;
     }
 
     @Override
@@ -44,11 +52,11 @@ public class StatsServiceImpl implements StatsService {
         List<StatisticCount> hitList;
 
         if (uris.isEmpty()) {
-            hitList = isUnique ? repository.getAllUniqueHits(startDate, endDate)
-                    : repository.getAllHits(startDate, endDate);
+            hitList = isUnique ? statsRepository.getAllUniqueHits(startDate, endDate)
+                    : statsRepository.getAllHits(startDate, endDate);
         } else {
-            hitList = isUnique ? repository.getUniqueHits(startDate, endDate, uris)
-                    : repository.getHits(startDate, endDate, uris);
+            hitList = isUnique ? statsRepository.getUniqueHits(startDate, endDate, uris)
+                    : statsRepository.getHits(startDate, endDate, uris);
         }
         return mapper.toDtoResponse(hitList);
 

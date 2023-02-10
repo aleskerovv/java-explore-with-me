@@ -13,31 +13,33 @@ import java.util.List;
 @Repository
 public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
 
-    @Query(value = "select app, uri, count(ip) as hits " +
-            "from statistics " +
-            "where hit_date between :startDate and :endDate and uri in :uri " +
-            "group by app, uri " +
-            "order by hits desc", nativeQuery = true)
+    @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(eh.ip) as hits " +
+            "FROM EndpointHit eh " +
+            "WHERE eh.hitDate between :startDate and :endDate " +
+            "AND uri in (:uri)" +
+            "GROUP BY app, uri " +
+            "ORDER BY hits desc")
     List<StatisticCount> getHits(LocalDateTime startDate, LocalDateTime endDate, Collection<String> uri);
 
-    @Query(value = "select app, uri, count(distinct ip) as hits " +
-            "from statistics " +
-            "where hit_date between :startDate and :endDate and uri in :uri " +
-            "group by app, uri " +
-            "order by hits desc", nativeQuery = true)
+    @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits " +
+            "FROM EndpointHit eh " +
+            "WHERE eh.hitDate between :startDate and :endDate " +
+            "AND uri in (:uri)" +
+            "GROUP BY app, uri " +
+            "ORDER BY hits desc")
     List<StatisticCount> getUniqueHits(LocalDateTime startDate, LocalDateTime endDate, Collection<String> uri);
 
-    @Query(value = "select app, uri, count(distinct ip) as hits " +
-            "from statistics " +
-            "where hit_date between :startDate and :endDate " +
-            "group by app, uri " +
-            "order by hits desc", nativeQuery = true)
+    @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits " +
+            "FROM EndpointHit eh " +
+            "WHERE eh.hitDate between :startDate and :endDate " +
+            "GROUP BY app, uri " +
+            "ORDER BY hits desc")
     List<StatisticCount> getAllUniqueHits(LocalDateTime startDate, LocalDateTime endDate);
 
-    @Query(value = "select app, uri, count(ip) as hits " +
-            "from statistics " +
-            "where hit_date between :startDate and :endDate " +
-            "group by app, uri " +
-            "order by hits desc", nativeQuery = true)
+    @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(eh.ip) as hits " +
+            "FROM EndpointHit eh " +
+            "WHERE eh.hitDate between :startDate and :endDate " +
+            "GROUP BY app, uri " +
+            "ORDER BY hits desc")
     List<StatisticCount> getAllHits(LocalDateTime startDate, LocalDateTime endDate);
 }

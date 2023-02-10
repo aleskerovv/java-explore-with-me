@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.dto.EndpointHitDto;
-import ru.practicum.ewm.dto.EndpointHitResponseDto;
 import ru.practicum.ewm.dto.HitCriteria;
 import ru.practicum.ewm.dto.ViewStatisticsDto;
 import ru.practicum.ewm.stat.service.server.service.StatsService;
@@ -22,8 +21,8 @@ public class StatsController {
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
-    public EndpointHitResponseDto addHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
-        return statsService.saveStatistics(endpointHitDto);
+    public void addHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
+        statsService.saveStatistics(endpointHitDto);
     }
 
     @GetMapping("/stats")

@@ -1,16 +1,18 @@
 package ru.practicum.ewn.service.events.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import ru.practicum.ewn.service.enums.RequestStatus;
 
 import java.util.List;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 @Jacksonized
 public class EventRequestStatusUpdateRequest {
-    List<Long> requestIds;
-    RequestStatus status;
+    private List<Long> requestIds;
+    private RequestStatus status;
 }

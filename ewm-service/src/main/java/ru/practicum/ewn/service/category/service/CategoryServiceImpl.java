@@ -42,15 +42,13 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto updateCategory(CategoryDtoCreate categoryDtoCreate, Long categoryId) {
         log.info("updating category with id {}", categoryId);
 
-        Optional<Category> category = categoryRepository.findById(categoryId);
 
-        if (category.isPresent()) {
-            Category categoryEntity = category.get();
-            categoryEntity.setName(categoryDtoCreate.getName());
-            return categoryMapper.toDto(categoryRepository.save(categoryEntity));
-        } else {
-            throw new NotFoundException(String.format("category with id %d not found", categoryId));
-        }
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException(String.format("category with id %d not found", categoryId)));
+
+        category.setName(categoryDtoCreate.getName());
+
+        return categoryMapper.toDto(category);
     }
 
     @Override

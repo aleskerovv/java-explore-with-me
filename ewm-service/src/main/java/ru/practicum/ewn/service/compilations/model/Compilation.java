@@ -1,15 +1,11 @@
 package ru.practicum.ewn.service.compilations.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import ru.practicum.ewn.service.events.model.Event;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,7 +24,7 @@ public class Compilation {
             joinColumns = {@JoinColumn(name = "compilation_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")})
     @ToString.Exclude
-    private Set<Event> events = new HashSet<>();
+    private List<Event> events;
     private Boolean pinned;
     private String title;
 }

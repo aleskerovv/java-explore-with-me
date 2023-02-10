@@ -1,15 +1,17 @@
 package ru.practicum.ewn.service.events.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import java.util.List;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 @Jacksonized
 public class EventRequestStatusUpdateResult {
-    List<ParticipantRequestDtoResponse> confirmedRequests;
-    List<ParticipantRequestDtoResponse> rejectedRequests;
+    private List<ParticipantRequestDtoResponse> confirmedRequests;
+    private List<ParticipantRequestDtoResponse> rejectedRequests;
 }

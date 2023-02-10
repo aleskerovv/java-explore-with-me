@@ -1,18 +1,20 @@
 package ru.practicum.ewn.service.compilations.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import ru.practicum.ewn.service.events.dto.EventShortDto;
 
 import java.util.List;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 @Jacksonized
 public class CompilationDto {
-    Long id;
-    List<EventShortDto> events;
-    Boolean pinned;
-    String title;
+    private Long id;
+    private List<EventShortDto> events;
+    private Boolean pinned;
+    private String title;
 }

@@ -1,10 +1,9 @@
 package ru.practicum.ewn.service.compilations.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import ru.practicum.ewn.service.compilations.dto.CompilationDto;
 import ru.practicum.ewn.service.compilations.dto.CompilationDtoCreate;
+import ru.practicum.ewn.service.compilations.dto.CompilationUpdateDto;
 import ru.practicum.ewn.service.compilations.model.Compilation;
 import ru.practicum.ewn.service.events.model.Event;
 
@@ -18,4 +17,9 @@ public interface CompilationMapper {
 
     @Mapping(target = "events", source = "events")
     CompilationDto toDto(Compilation compilation);
+
+    @Mapping(target = "events", source = "events")
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void partialUpdate(CompilationUpdateDto compilationUpdateDto,
+                       @MappingTarget Compilation compilation, List<Event> events);
 }

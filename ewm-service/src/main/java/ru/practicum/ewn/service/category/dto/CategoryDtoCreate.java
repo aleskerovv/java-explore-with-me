@@ -1,15 +1,17 @@
 package ru.practicum.ewn.service.category.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotNull;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 @Jacksonized
 public class CategoryDtoCreate {
     @NotNull
-    String name;
+    private String name;
 }

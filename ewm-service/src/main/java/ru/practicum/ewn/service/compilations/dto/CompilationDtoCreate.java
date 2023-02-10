@@ -1,20 +1,22 @@
 package ru.practicum.ewn.service.compilations.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 @Jacksonized
 public class CompilationDtoCreate {
     @NotNull
-    List<Long> events;
+    private List<Long> events;
     @NotNull
-    Boolean pinned;
+    private Boolean pinned;
     @NotNull
-    String title;
+    private String title;
 }

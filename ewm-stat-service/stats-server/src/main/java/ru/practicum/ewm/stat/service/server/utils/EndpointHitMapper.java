@@ -14,12 +14,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface EndpointHitMapper {
     @Mapping(target = "hitDate", source = "timestamp")
+    @Mapping(target = "app.name", source = "app")
     EndpointHit toEndpointHitEntity(EndpointHitDto endpointHitDto);
-
-    @Mapping(target = "timestamp", source = "hitDate")
-    EndpointHitResponseDto toResponseDto(EndpointHit endpointHit);
-
-    ViewStatisticsDto toDtoResponse(StatisticCount statistic);
 
     List<ViewStatisticsDto> toDtoResponse(List<StatisticCount> statistic);
 }

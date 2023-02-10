@@ -11,13 +11,12 @@ import ru.practicum.ewn.service.compilations.dao.CompilationRepository;
 import ru.practicum.ewn.service.compilations.dto.CompilationDto;
 import ru.practicum.ewn.service.compilations.dto.CompilationDtoCreate;
 import ru.practicum.ewn.service.compilations.dto.CompilationUpdateDto;
+import ru.practicum.ewn.service.compilations.mapper.CompilationMapper;
 import ru.practicum.ewn.service.compilations.model.Compilation;
 import ru.practicum.ewn.service.events.dao.EventRepository;
 import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.handlers.NotFoundException;
-import ru.practicum.ewn.service.compilations.mapper.CompilationMapper;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,13 +50,11 @@ public class CompilationServiceImpl implements CompilationService {
 
         Compilation compilation = getCompilationIfExists(compilationId);
 
-        Set<Event> events = new HashSet<>(eventRepository.findEventsByIdIn(compilationDto.getEvents()));
+        List<Event> events = eventRepository.findEventsByIdIn(compilationDto.getEvents());
 
-        compilation.setEvents(events)
-                .setPinned(compilationDto.getPinned())
-                .setTitle(compilationDto.getTitle());
+        compilationMapper.partialUpdate(compilationDto, compilation, events);
 
-        return compilationMapper.toDto(compilationRepository.save(compilation));
+        return compilationMapper.toDto(compilation);
     }
 
     @Override
