@@ -1,10 +1,8 @@
 package ru.practicum.ewm.stat.service.server.utils;
 
-import ru.practicum.ewm.dto.EndpointHitDto;
-import ru.practicum.ewm.dto.EndpointHitResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
+import ru.practicum.ewm.dto.EndpointHitDto;
 import ru.practicum.ewm.dto.StatisticCount;
 import ru.practicum.ewm.dto.ViewStatisticsDto;
 import ru.practicum.ewm.stat.service.server.model.EndpointHit;
