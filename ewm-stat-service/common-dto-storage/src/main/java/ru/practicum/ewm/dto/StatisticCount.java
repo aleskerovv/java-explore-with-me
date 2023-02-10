@@ -5,5 +5,5 @@ public interface StatisticCount {
 
     String getUri();
 
-    Integer getHits();
+    Long getHits();
 }

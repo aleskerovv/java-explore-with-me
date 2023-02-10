@@ -16,30 +16,30 @@ public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
     @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(eh.ip) as hits " +
             "FROM EndpointHit eh " +
             "WHERE eh.hitDate between :startDate and :endDate " +
-            "AND uri in (:uri)" +
-            "GROUP BY app, uri " +
+            "AND eh.uri in (:uri) " +
+            "GROUP BY eh.app.name, eh.uri " +
             "ORDER BY hits desc")
     List<StatisticCount> getHits(LocalDateTime startDate, LocalDateTime endDate, Collection<String> uri);
 
     @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits " +
             "FROM EndpointHit eh " +
             "WHERE eh.hitDate between :startDate and :endDate " +
-            "AND uri in (:uri)" +
-            "GROUP BY app, uri " +
+            "AND eh.uri in (:uri) " +
+            "GROUP BY eh.app.name, eh.uri " +
             "ORDER BY hits desc")
     List<StatisticCount> getUniqueHits(LocalDateTime startDate, LocalDateTime endDate, Collection<String> uri);
 
     @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits " +
             "FROM EndpointHit eh " +
             "WHERE eh.hitDate between :startDate and :endDate " +
-            "GROUP BY app, uri " +
+            "GROUP BY eh.app.name, eh.uri " +
             "ORDER BY hits desc")
     List<StatisticCount> getAllUniqueHits(LocalDateTime startDate, LocalDateTime endDate);
 
     @Query(value = "SELECT eh.app.name as app, eh.uri as uri, COUNT(eh.ip) as hits " +
             "FROM EndpointHit eh " +
             "WHERE eh.hitDate between :startDate and :endDate " +
-            "GROUP BY app, uri " +
+            "GROUP BY eh.app.name, eh.uri " +
             "ORDER BY hits desc")
     List<StatisticCount> getAllHits(LocalDateTime startDate, LocalDateTime endDate);
 }
