@@ -3,7 +3,9 @@ package ru.practicum.ewn.service.events;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewn.service.events.dto.CommentDtoResponse;
 import ru.practicum.ewn.service.events.dto.EventDto;
+import ru.practicum.ewn.service.events.dto.UpdateCommentAdminRequest;
 import ru.practicum.ewn.service.events.dto.UpdateEventAdminRequest;
 import ru.practicum.ewn.service.events.service.AdminEventService;
 import ru.practicum.ewn.service.utils.AdminEventFilter;
@@ -31,4 +33,16 @@ public class AdminEventController {
         return adminEventService.updateEventByAdmin(eventId, request);
     }
 
+    @GetMapping("/comments/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CommentDtoResponse getCommentById(@PathVariable Long commentId) {
+        return adminEventService.getCommentById(commentId);
+    }
+
+    @PatchMapping("comments/{commentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CommentDtoResponse updateCommentStatus(@PathVariable Long commentId,
+                                                  @Valid @RequestBody UpdateCommentAdminRequest adminRequest) {
+        return adminEventService.updateCommentByAdmin(commentId, adminRequest);
+    }
 }

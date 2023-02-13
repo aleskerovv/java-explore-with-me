@@ -5,9 +5,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import ru.practicum.ewn.service.events.dto.ParticipantRequestDtoResponse;
 import ru.practicum.ewn.service.events.mapper.EventMapper;
-import ru.practicum.ewn.service.events.model.Request;
-import ru.practicum.ewn.service.events.model.RequestCount;
-import ru.practicum.ewn.service.events.model.RequestCountStub;
 import ru.practicum.ewn.service.users.mapper.UserMapper;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = {UserMapper.class,

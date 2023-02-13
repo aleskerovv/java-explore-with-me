@@ -66,6 +66,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Long compilationId) {
+        log.info("getting compilation by id {}", compilationId);
         Compilation compilation = compilationRepository.findById(compilationId)
                 .orElseThrow(() ->
                         new NotFoundException(String.format("Compilation with id %d not found", compilationId)));
@@ -76,6 +77,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     @Transactional(readOnly = true)
     public List<CompilationDto> findAllCompilations(Boolean pinned, int from, int size) {
+        log.info("getting compilations with filter by 'pinned'");
         Pageable pageable = PageRequest.of(from, size);
 
         return compilationRepository.findCompilationByPinned(pinned, pageable).stream()

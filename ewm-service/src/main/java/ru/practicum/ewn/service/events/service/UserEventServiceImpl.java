@@ -9,12 +9,16 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewn.service.category.dao.CategoryRepository;
 import ru.practicum.ewn.service.category.model.Category;
+import ru.practicum.ewn.service.enums.CommentState;
 import ru.practicum.ewn.service.enums.EventState;
 import ru.practicum.ewn.service.enums.RequestStatus;
+import ru.practicum.ewn.service.events.dao.CommentRepository;
 import ru.practicum.ewn.service.events.dao.EventRepository;
 import ru.practicum.ewn.service.events.dao.RequestRepository;
 import ru.practicum.ewn.service.events.dto.*;
+import ru.practicum.ewn.service.events.mapper.CommentMapper;
 import ru.practicum.ewn.service.events.mapper.EventMapper;
+import ru.practicum.ewn.service.events.model.Comment;
 import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.events.model.Request;
 import ru.practicum.ewn.service.events.model.RequestMapper;
@@ -43,6 +47,8 @@ public class UserEventServiceImpl implements UserEventService {
     private final EventMapper eventMapper;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -181,13 +187,85 @@ public class UserEventServiceImpl implements UserEventService {
                 .build();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<CommentDtoResponse> getCommentsByAuthorId(Long authorId, int from, int size) {
+        log.info("getting comments by author id {}", authorId);
+        Pageable pageable = PageRequest.of(from, size);
+        return commentRepository.findCommentsByAuthorId(authorId, pageable).stream()
+                .map(commentMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public CommentDtoResponse addComment(CommentDtoCreate commentDtoCreate, Long userId) {
+        log.info("creating new comment by user with id {}", userId);
+        User user = this.getUserIfExists(userId);
+
+        Event event = this.getEventIfExists(commentDtoCreate.getEventId());
+
+        Comment comment = commentMapper.toEntity(commentDtoCreate);
+        comment.setAuthor(user)
+                .setEvent(event)
+                .setCreated(LocalDateTime.now())
+                .setCommentState(CommentState.PENDING);
+
+        CommentDtoResponse dtoResponse = commentMapper.toDto(commentRepository.save(comment));
+
+        log.info("created new comment: {}", comment);
+
+        return dtoResponse;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public CommentDtoResponse updateComment(CommentDtoUpdate commentDtoUpdate, Long commentId, Long userId) {
+        log.info("updating comment with id {}", commentId);
+        this.getUserIfExists(userId);
+
+        Comment comment = this.getCommentIfExists(userId, commentId);
+
+        if (comment.getCommentState().equals(CommentState.PUBLISHED)) {
+            throw new DataValidationException("You can update only not published comments");
+        }
+
+        commentMapper.partialUpdate(commentDtoUpdate, comment);
+
+        return commentMapper.toDto(comment);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void deleteComment(Long commentId) {
+        log.info("deleting comment with id {}", commentId);
+        Comment comment = this.getCommentIfExists(commentId);
+
+        if (comment.getCommentState().equals(CommentState.PUBLISHED)) {
+            throw new DataValidationException("You can delete only not published comments");
+        }
+
+        commentRepository.deleteById(commentId);
+    }
+
     private User getUserIfExists(Long userId) {
         return userRepository.findById(userId).orElseThrow(() ->
-                new NotFoundException(String.format("User with id=%d not found", userId)));
+                new NotFoundException(String.format("User with id %d not found", userId)));
     }
 
     private Event getEventIfExists(Long eventId) {
         return eventRepository.findById(eventId).orElseThrow(() ->
-                new NotFoundException(String.format("Event with id=%d not found", eventId)));
+                new NotFoundException(String.format("Event with id %d not found", eventId)));
+    }
+
+    private Comment getCommentIfExists(Long commentId) {
+        return commentRepository.findById(commentId).orElseThrow(() ->
+                new NotFoundException(String.format("Comment with id=%d not found", commentId)));
+    }
+
+    private Comment getCommentIfExists(Long userId, Long commentId) {
+        return Optional.of(commentRepository.findCommentByAuthorIdAndId(userId, commentId)).orElseThrow(() ->
+                new NotFoundException(String.format("Comment with id=%d from user with id=%d not found", userId,
+                        commentId)));
     }
 }

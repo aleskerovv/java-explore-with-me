@@ -10,13 +10,28 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Objects;
+
 @RestControllerAdvice
 @Slf4j
 public class ApiErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentNotValidException.class,
-            MissingServletRequestParameterException.class})
-    public ResponseEntity<ApiError> handleException(Exception e) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleException(MethodArgumentNotValidException e) {
+        String message = Objects.requireNonNull(e.getFieldError()).getDefaultMessage();
+        log.warn(message);
+        final HttpStatus status = HttpStatus.BAD_REQUEST;
+        final ApiError apiError = ApiError.builder()
+                .status(status)
+                .message(message)
+                .reason("Incorrectly made request.")
+                .build();
+        return ResponseEntity.status(status).body(apiError);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ApiError> handleException(MissingServletRequestParameterException e) {
         log.warn(e.getMessage());
         final HttpStatus status = HttpStatus.BAD_REQUEST;
         final ApiError apiError = ApiError.builder()
@@ -25,7 +40,6 @@ public class ApiErrorHandler {
                 .reason("Incorrectly made request.")
                 .build();
         return ResponseEntity.status(status).body(apiError);
-
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

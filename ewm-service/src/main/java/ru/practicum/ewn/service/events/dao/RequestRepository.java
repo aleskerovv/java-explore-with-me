@@ -13,12 +13,7 @@ import java.util.Set;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
-    @Query("SELECT COUNT(r) " +
-            "FROM Request r " +
-            "WHERE r.event.id = :eventId")
-    RequestsCount findRequestsCount(Long eventId);
-
-    List<Request> findRequestByRequesterIdAndEventId(Long requesterId, Long eventId);
+    Request findRequestByRequesterIdAndEventId(Long requesterId, Long eventId);
 
     List<Request> findRequestByRequesterId(Long requesterId);
 

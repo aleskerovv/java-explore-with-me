@@ -53,12 +53,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteCategory(Long categoryId) {
+        log.info("deleting category with id {}", categoryId);
         categoryRepository.deleteById(categoryId);
     }
 
     @Override
     @Transactional(readOnly = true)
     public CategoryDto getById(Long id) {
+        log.info("getting category by id {}", id);
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("category with id %d not found", id)));
 
@@ -68,6 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional(readOnly = true)
     public List<CategoryDto> findCategories(Integer from, Integer size) {
+        log.info("getting all categories");
         Pageable pg = PageRequest.of(from, size);
 
         return categoryRepository.findAll(pg).stream()
