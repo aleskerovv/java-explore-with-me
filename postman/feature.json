@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "107fe242-4f09-4866-9f14-b883228293b3",
+		"_postman_id": "2f6f8803-ca70-4f67-abf6-4a8c09595328",
 		"name": "Test Feature Comments",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23131735"
@@ -151,12 +151,12 @@
 							"const target = pm.response.json()[0];",
 							"",
 							"pm.test(\"Комментарий должен содержать поля: id, text, authorName, created, commentState, published\", function () {",
-							"pm.expect(target).to.have.property('id');",
-							"pm.expect(target).to.have.property('text');",
-							"pm.expect(target).to.have.property('authorName');",
-							"pm.expect(target).to.have.property('created');",
-							"pm.expect(target).to.have.property('commentState');",
-							"pm.expect(target).to.have.property('published');",
+							"    pm.expect(target).to.have.property('id');",
+							"    pm.expect(target).to.have.property('text');",
+							"    pm.expect(target).to.have.property('authorName');",
+							"    pm.expect(target).to.have.property('created');",
+							"    pm.expect(target).to.have.property('commentState');",
+							"    pm.expect(target).to.have.property('published');",
 							"});",
 							"",
 							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
@@ -183,10 +183,10 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
-							"        pm.collectionVariables.set('eid', event.id)",
+							"        pm.collectionVariables.set('eid', event.id);",
 							"        const commenter_one = await api.addUser(rnd.getUser());",
 							"        const commenter_two = await api.addUser(rnd.getUser());",
 							"        let comment_first = await api.addComment(commenter_one.id, rnd.getComment(event.id));",
@@ -275,12 +275,12 @@
 							"const target = pm.response.json()[0];",
 							"",
 							"pm.test(\"Комментарий должен содержать поля: id, text, authorName, created, commentState, published\", function () {",
-							"pm.expect(target).to.have.property('id');",
-							"pm.expect(target).to.have.property('text');",
-							"pm.expect(target).to.have.property('authorName');",
-							"pm.expect(target).to.have.property('created');",
-							"pm.expect(target).to.have.property('commentState');",
-							"pm.expect(target).to.have.property('published');",
+							"    pm.expect(target).to.have.property('id');",
+							"    pm.expect(target).to.have.property('text');",
+							"    pm.expect(target).to.have.property('authorName');",
+							"    pm.expect(target).to.have.property('created');",
+							"    pm.expect(target).to.have.property('commentState');",
+							"    pm.expect(target).to.have.property('published');",
 							"});",
 							"",
 							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
@@ -307,7 +307,7 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        const commenter = await api.addUser(rnd.getUser());",
@@ -396,13 +396,13 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        const commenter = await api.addUser(rnd.getUser());",
-							"        pm.collectionVariables.set('uid', commenter.id)",
+							"        pm.collectionVariables.set('uid', commenter.id);",
 							"        const comment = await api.addComment(commenter.id, rnd.getComment(event.id));",
-							"        pm.collectionVariables.set('commId', comment.id)",
+							"        pm.collectionVariables.set('commId', comment.id);",
 							"        const foundedComment = await api.findComment(comment.id);",
 							"        pm.collectionVariables.set('response', foundedComment);",
 							"        ",
@@ -526,12 +526,12 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        const commenter = await api.addUser(rnd.getUser());",
 							"        let comment = await api.addComment(commenter.id, rnd.getComment(event.id));",
-							"        pm.collectionVariables.set('commId', comment.id)",
+							"        pm.collectionVariables.set('commId', comment.id);",
 							"        pm.collectionVariables.set('response', comment);",
 							"    } catch(err) {",
 							"        console.error(\"Ошибка при подготовке тестовых данных.\", err);",
@@ -668,7 +668,7 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        const commenter = await api.addUser(rnd.getUser());",
@@ -769,7 +769,7 @@
 							"        pm.collectionVariables.set(\"uid\", user.id)",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        comment = rnd.getComment(event.id);",
@@ -862,14 +862,14 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        const commenter = await api.addUser(rnd.getUser());",
-							"        pm.collectionVariables.set(\"uid\", commenter.id)",
+							"        pm.collectionVariables.set('uid', commenter.id)",
 							"        let comment = await api.addComment(commenter.id, rnd.getComment(event.id));",
 							"        comment = await api.publishComment(comment.id);",
-							"        pm.collectionVariables.set(\"commId\", comment.id)",
+							"        pm.collectionVariables.set('commId', comment.id);",
 							"        const foundedComment = await api.findComment(comment.id);",
 							"        pm.collectionVariables.set('response', foundedComment);",
 							"        ",
@@ -990,7 +990,7 @@
 							"        const user = await api.addUser(rnd.getUser());",
 							"        const category = await api.addCategory(rnd.getCategory());",
 							"        let eventBody = rnd.getEvent(category.id);",
-							"        eventBody['requestModeration'] = true",
+							"        eventBody['requestModeration'] = true;",
 							"        let event = await api.addEvent(user.id, eventBody);",
 							"        event = await api.publishEvent(event.id);",
 							"        const commenter = await api.addUser(rnd.getUser());",
@@ -1292,12 +1292,12 @@
 		},
 		{
 			"key": "usersCount",
-			"value": "1",
+			"value": "",
 			"type": "string"
 		},
 		{
 			"key": "catid",
-			"value": "1",
+			"value": "",
 			"type": "string"
 		},
 		{
@@ -1317,7 +1317,7 @@
 		},
 		{
 			"key": "uid",
-			"value": "1",
+			"value": "",
 			"type": "string"
 		},
 		{
@@ -1327,12 +1327,12 @@
 		},
 		{
 			"key": "eid",
-			"value": "1",
+			"value": "",
 			"type": "string"
 		},
 		{
 			"key": "compid",
-			"value": "1",
+			"value": "",
 			"type": "string"
 		},
 		{
@@ -1346,23 +1346,13 @@
 			"type": "string"
 		},
 		{
-			"key": "uid1",
-			"value": "",
-			"type": "string"
-		},
-		{
 			"key": "reqid",
-			"value": "1",
-			"type": "string"
-		},
-		{
-			"key": "catId",
 			"value": "",
 			"type": "string"
 		},
 		{
 			"key": "commId",
-			"value": null,
+			"value": "",
 			"type": "string"
 		}
 	]
