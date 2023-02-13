@@ -83,7 +83,7 @@
 							"    pm.expect(target.text).equal(source.text, 'Сообщения комментария должно соответствовать сообщению в запросе');",
 							"    pm.expect(target.authorName).to.not.be.null;",
 							"    pm.expect(target.created).to.not.be.null;",
-							"    pm.expect(target.commentState.toString()).equal('PENDING', 'Статус комментария должен ожидать модерации - PENDING');",
+							"    pm.expect(target.commentState).equal('PENDING', 'Статус комментария должен ожидать модерации - PENDING');",
 							"    pm.expect(target.published).to.be.null;",
 							"});"
 						],
@@ -161,10 +161,10 @@
 							"",
 							"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
 							"    pm.expect(source.id).to.not.be.null;",
-							"    pm.expect(source.text.toString()).equal(target.text, 'Сообщения комментария должно соответствовать сообщению в запросе');",
+							"    pm.expect(source.text).equal(target.text, 'Сообщения комментария должно соответствовать сообщению в запросе');",
 							"    pm.expect(source.authorName).to.not.be.null;",
 							"    pm.expect(source.created).to.not.be.null;",
-							"    pm.expect(source.commentState.toString()).equal('PUBLISHED', 'Комментарий должен быть опубликован - PUBLISHED');",
+							"    pm.expect(source.commentState).equal('PUBLISHED', 'Комментарий должен быть опубликован - PUBLISHED');",
 							"    pm.expect(source.published).to.not.be.null;",
 							"});"
 						],
@@ -288,7 +288,7 @@
 							"    pm.expect(source.text).equal(target.text, 'Сообщения комментария должно соответствовать сообщению в запросе');",
 							"    pm.expect(source.authorName).to.not.be.null;",
 							"    pm.expect(source.created).to.not.be.null;",
-							"    pm.expect(source.commentState.toString()).equal('PUBLISHED', 'Комментарий должен быть опубликован - PUBLISHED');",
+							"    pm.expect(source.commentState).equal('PUBLISHED', 'Комментарий должен быть опубликован - PUBLISHED');",
 							"    pm.expect(source.published).to.not.be.null;",
 							"});"
 						],
@@ -584,7 +584,7 @@
 							"    pm.expect(source.text).equal(target.text, 'Сообщения комментария должно соответствовать сообщению в запросе');",
 							"    pm.expect(source.authorName).to.not.be.null;",
 							"    pm.expect(source.created).to.not.be.null;",
-							"    pm.expect(source.commentState.toString()).equal('PENDING', 'Статус комментария должен ожидать модерации - PENDING');",
+							"    pm.expect(source.commentState).equal('PENDING', 'Статус комментария должен ожидать модерации - PENDING');",
 							"    pm.expect(source.published).to.be.null;",
 							"});"
 						],
@@ -648,7 +648,7 @@
 							"            };",
 							"pm.sendRequest(req, (error, response) => {",
 							"    pm.test(\"Статус 404 при выполнении запроса\", function(){",
-							"        ",
+							"        pm.expect(response.status).equal('Not Found');",
 							"    });",
 							"})",
 							""
@@ -922,7 +922,7 @@
 							"});",
 							"",
 							"pm.test(\"status должен быть CONFLICT\", function () {",
-							"    pm.expect(target.status.toString()).equals(\"CONFLICT\");",
+							"    pm.expect(target.status).equals('CONFLICT');",
 							"});",
 							""
 						],
@@ -1040,7 +1040,7 @@
 							"});",
 							"",
 							"pm.test(\"status должен быть CONFLICT\", function () {",
-							"    pm.expect(target.status.toString()).equals(\"CONFLICT\");",
+							"    pm.expect(target.status).equals('CONFLICT');",
 							"});",
 							""
 						],
