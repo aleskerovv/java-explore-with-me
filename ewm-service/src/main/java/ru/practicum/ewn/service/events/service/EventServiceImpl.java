@@ -8,13 +8,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewn.service.events.dao.CommentRepository;
 import ru.practicum.ewn.service.events.dao.EventRepository;
+import ru.practicum.ewn.service.events.dto.CommentDtoResponse;
 import ru.practicum.ewn.service.events.dto.EventDto;
 import ru.practicum.ewn.service.events.dto.EventShortDto;
+import ru.practicum.ewn.service.events.mapper.CommentMapper;
+import ru.practicum.ewn.service.events.mapper.EventMapper;
 import ru.practicum.ewn.service.events.model.Event;
 import ru.practicum.ewn.service.handlers.NotFoundException;
 import ru.practicum.ewn.service.statistic.StatisticService;
-import ru.practicum.ewn.service.events.mapper.EventMapper;
 import ru.practicum.ewn.service.utils.UserEventFilter;
 
 import java.time.LocalDateTime;
@@ -32,6 +35,8 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final StatisticService statisticService;
+    private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -67,6 +72,16 @@ public class EventServiceImpl implements EventService {
 
 
         return buildEventResponse(event);
+    }
+
+    @Override
+    public List<CommentDtoResponse> getCommentsByEventId(Long eventId, int from, int size) {
+        log.info("getting comments by event with id {}", eventId);
+        Pageable pageable = PageRequest.of(from, size);
+
+        return commentRepository.findCommentsByEventId(eventId, pageable).stream()
+                .map(commentMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     private List<EventDto> buildEventResponse(List<Event> events) {

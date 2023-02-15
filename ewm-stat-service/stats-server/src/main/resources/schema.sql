@@ -14,4 +14,4 @@ CREATE TABLE IF NOT EXISTS applications
     app_name VARCHAR(200),
     CONSTRAINT pk_applications PRIMARY KEY (id),
     CONSTRAINT UQ_APP_NAME UNIQUE (app_name)
-)
+);

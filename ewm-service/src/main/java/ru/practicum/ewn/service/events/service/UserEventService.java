@@ -15,5 +15,14 @@ public interface UserEventService {
 
     List<ParticipantRequestDtoResponse> getEventsRequests(Long userId, Long eventId);
 
-    EventRequestStatusUpdateResult updateRequestStatus(Long userId, Long eventId, EventRequestStatusUpdateRequest request);
+    EventRequestStatusUpdateResult updateRequestStatus(Long userId, Long eventId,
+                                                       EventRequestStatusUpdateRequest request);
+
+    List<CommentDtoResponse> getCommentsByAuthorId(Long authorId, int from, int size);
+
+    CommentDtoResponse addComment(CommentDtoCreate commentDtoCreate, Long userId);
+
+    CommentDtoResponse updateComment(CommentDtoUpdate commentDtoUpdate, Long commentId, Long userId);
+
+    void deleteComment(Long commentId);
 }
