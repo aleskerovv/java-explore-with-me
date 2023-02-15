@@ -86,7 +86,7 @@ public class AdminEventServiceImpl implements AdminEventService {
         log.info("updating comment with id {}", commentId);
         Comment comment = this.findCommentById(commentId);
 
-        if (updateRequest.getCommentState().equals(CommentStateAction.PUBLISH_COMMENT)) {
+        if (updateRequest.getCommentState().equals(CommentStateAction.PUBLISH)) {
             comment.setCommentState(CommentState.PUBLISHED);
             comment.setPublished(LocalDateTime.now());
         } else {

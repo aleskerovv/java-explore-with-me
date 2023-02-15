@@ -11,5 +11,5 @@ import ru.practicum.ewn.service.enums.CommentStateAction;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class UpdateCommentAdminRequest {
-    CommentStateAction commentState;
+    private CommentStateAction commentState;
 }

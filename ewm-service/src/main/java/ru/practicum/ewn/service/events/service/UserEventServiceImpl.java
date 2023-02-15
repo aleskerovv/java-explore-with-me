@@ -236,12 +236,11 @@ public class UserEventServiceImpl implements UserEventService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteComment(Long commentId) {
         log.info("deleting comment with id {}", commentId);
         Comment comment = this.getCommentIfExists(commentId);
 
-        if (comment.getCommentState().equals(CommentState.PUBLISHED)) {
+        if (comment.getCommentState() == CommentState.PUBLISHED) {
             throw new DataValidationException("You can delete only not published comments");
         }
 

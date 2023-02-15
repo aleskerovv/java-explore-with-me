@@ -51,10 +51,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void deleteUser(Long id) {
         log.info("deleting user with id {}", id);
-        getUserIfExists(id);
         userRepository.deleteById(id);
     }
 
